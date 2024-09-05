@@ -1,6 +1,56 @@
+
+/* Practice 2.2 Dice Game, but OOP
+
+Game Rules
+  The player has 5 tries (rounds) per game.
+  In each try, the player rolls 5 dice.
+  The player can choose to reroll any number of dice up to 3 times per round.
+  After the final roll (or when the player is satisfied), the hand is evaluated and points are awarded based on the highest poker hand achieved.
+  The goal is to accumulate as many points as possible over the 5 rounds.
+
+Implementation Guidelines
+
+1. Dice Rolling
+  Use an array to represent the 5 dice.
+  Implement a method to roll the dice (generate random numbers from 1 to 6).
+  Think of how to display the dice to the user
+  Allow the player to select which dice to reroll (up to 3 times per round).
+  How will you ask the user which dice to reroll? (Hint: the dice are stored in an array).
+
+2. Hand Evaluation
+  Implement methods to check for different poker hands (e.g., Three of a Kind, Full House, etc.).
+  Use conditional statements to determine the highest hand achieved.
+
+3. Scoring
+  Assign point values to each type of hand.
+  Keep a running total of the player's score across all 5 rounds.
+
+4. Game Flow
+  Use a loop to manage the 5 rounds of the game.
+  Within each round, use another loop to manage the up to 3 rerolls.
+  Use conditional statements to check if the player wants to reroll or keep their current hand.
+
+5. User Interface
+  Display the current dice values after each roll.
+  Prompt the player for input on which dice to reroll.
+  Show the final hand and score for each round.
+  Display the total score at the end of the game.
+  
+	Suggested Poker Hands and Points
+  Five of a Kind: 50 points
+  Four of a Kind: 40 points
+  Full House: 30 points
+  Straight: 25 points
+  Three of a Kind: 20 points
+  Two Pair: 15 points
+  One Pair: 10 points
+  High Card: 5 points
+*/
+
 package com.example;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -191,6 +241,7 @@ public class App {
 		System.out.println("Mean = " + mean);
 
 		// Median
+		Collections.sort(numbers);
 		double median = 0.0;
 		if (numbers.size() % 2 == 0) {
 			median = (numbers.get(numbers.size() / 2) + numbers.get((numbers.size() / 2) - 1)) / 2;
@@ -219,5 +270,29 @@ public class App {
 		}
 
 		System.out.println("Mode = " + mode);
+
+		// Find all possible modes
+		Map<Integer, Integer> modeMap = new HashMap<Integer, Integer>();
+		for (int i = 0; i < numbers.size(); i++) {
+			if (modeMap.containsKey(numbers.get(i))) {
+				modeMap.put(numbers.get(i), modeMap.get(numbers.get(i)) + 1);
+			} else {
+				modeMap.put(numbers.get(i), 1);
+			}
+		}
+		// Get all possible modes from hashmap
+		int max = 0;
+		for (Map.Entry<Integer, Integer> entry : modeMap.entrySet()) {
+			if (entry.getValue() > max) {
+				max = entry.getValue();
+			}
+		}
+		ArrayList<Integer> modes = new ArrayList<Integer>();
+		for (Map.Entry<Integer, Integer> entry : modeMap.entrySet()) {
+			if (entry.getValue() == max) {
+				modes.add(entry.getKey());
+			}
+		}
+		System.out.println("All possible modes: " + modes);
 	}
 }
