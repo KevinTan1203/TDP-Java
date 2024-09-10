@@ -3,16 +3,23 @@ package com.bank;
 
 public class Main {
   public static void main(String[] args) {
-    // Create a savings account with an
-    vingsAccount account = new SavingsAccount(1000.0, 5.0);
+    SavingsAccount account = new SavingsAccount(500, 100); // initial balance of 500 and overdraft limit of 100
 
-    // Display the initial balance
-    System.out.println("Initial Balance: $" + account.getBalance());
+    try {
+      // Example 1: Withdrawal exceeds balance
+      account.withdraw(600); // This will trigger "Withdrawal exceeds balance" exception
+    } catch (IllegalArgumentException e) {
+      System.out.println(e.getMessage());
+    }
 
-    // Apply compound interest for a term of 12 months
-    account.applyCompoundInterest(12);
+    try {
+      // Example 2: Overdraft limit exceeded
+      account.withdraw(150); // This will trigger "Overdraft Limit exceeded" exception
+    } catch (IllegalArgumentException e) {
+      System.out.println(e.getMessage());
+    }
 
-    // Display the balance after applying compound interest
-    System.out.println("Balance after applying compound interest: $" + account.getBalance());
+    // Display remaining balance
+    System.out.println("Remaining Balance: " + account.getBalance());
   }
 }

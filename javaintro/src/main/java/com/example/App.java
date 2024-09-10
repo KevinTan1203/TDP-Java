@@ -175,11 +175,21 @@ public class App {
 		Scanner sc = new Scanner(System.in);
 
 		while (true) {
-			int num = sc.nextInt();
-			if (num == 0) {
-				break;
-			} else {
-				numbers.add(num);
+
+			// Simple exception handling that throws an exception when a non-integer is entered
+			try {
+				int num = sc.nextInt();
+				if (num == 0) {
+					break;
+				} else {
+					numbers.add(num);
+				}
+			} except (Exception e) {
+				System.out.println("Invalid input. Please enter a number.");
+				sc.next();
+			} finally {
+				System.out.println("Program ends!");
+				sc.close();
 			}
 		}
 
