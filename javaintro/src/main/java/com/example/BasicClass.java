@@ -2,6 +2,7 @@ package com.example;
 
 import java.util.*;
 
+// If a class is public, it can be accessed by all other classes in the folder
 public class BasicClass {
   public static void main(String[] args) {
     Customer customer0 = new Customer();
