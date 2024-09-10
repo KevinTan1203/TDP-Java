@@ -57,11 +57,12 @@ public class BasicClass {
     ((DigitalProduct) product1).getFileName();
 
     ArrayList<Product> catalog = new ArrayList<>();
-    catalog.add(new PhysicalProduct());
-    catalog.add(new DigitalProduct());
+    catalog.add(new PhysicalProduct("ACME Anvil", "A1", 100, 10, 5.0));
+    catalog.add(new DigitalProduct("Lord of the Rings", "Ek1", 50, "mp3", "lotr.mp3", 1024));
 
     for (Product product : catalog) {
-      System.out.println(product);
+      System.out.println(product.getName());
+      System.out.println(product.calculateTotalPrice());
     }
   }
 }
@@ -355,4 +356,90 @@ class DigitalProduct extends Product {
   public double calculateTotalPrice() {
     return price + (fileSize / 1024) * 0.01;
   }
+}
+
+class SubscriptionProduct extends Product {
+  @Override
+  public double calculateTotalPrice() {
+    return price * 12;
+  }
+}
+
+// Abstract Class
+/*
+ * Abstract classes must have at least one abstract method
+ */
+abstract class Shape {
+  protected String name;
+
+  public Shape() {
+    this.name = "N/A";
+  }
+
+  public Shape(String name) {
+    this.name = name;
+  }
+
+  public abstract double calculateArea();
+}
+
+// All classes that implements interface must have their own version of the
+// implemented method
+class Subscription implements Purchaseable {
+  private String name;
+  private double fees;
+  private int recurringPeriod;
+  private ArrayList<String> permissions = new ArrayList<String>();
+
+  public Subscription() {
+  }
+
+  public Subscription(String name, double fees, int recurringPeriod, ArrayList<String> permissions) {
+    this.name = name;
+    this.fees = fees;
+    this.recurringPeriod = recurringPeriod;
+    this.permissions = permissions;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public double getFees() {
+    return fees;
+  }
+
+  public void setFees(double fees) {
+    this.fees = fees;
+  }
+
+  public int getRecurringPeriod() {
+    return recurringPeriod;
+  }
+
+  public void setRecurringPeriod(int recurringPeriod) {
+    this.recurringPeriod = recurringPeriod;
+  }
+
+  public ArrayList<String> getPermissions() {
+    return permissions;
+  }
+
+  public void setPermissions(ArrayList<String> permissions) {
+    this.permissions = permissions;
+  }
+
+  public String getPurchaseSummary() {
+    return "Subscription: " + name + " at " + fees + " per " + recurringPeriod + " days";
+  }
+}
+
+// Interface
+// Interfaces cannot have data stored inside it
+interface Purchaseable {
+  public String getPurchaseSummary();
 }
